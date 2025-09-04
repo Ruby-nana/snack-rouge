@@ -1,20 +1,51 @@
 // Basic enhancements for Snack Rouge site
 (function () {
+  // Ensure no-js class is removed from both html and body
   document.documentElement.classList.remove('no-js');
+  if (document.body) document.body.classList.remove('no-js');
 
   // Mobile nav toggle
   const toggle = document.querySelector('.nav-toggle');
   const nav = document.getElementById('site-nav');
   if (toggle && nav) {
+    // Create a scrim to catch outside taps
+    const scrim = document.createElement('div');
+    scrim.className = 'nav-scrim';
+    document.body.appendChild(scrim);
+    let lastFocus = null;
+    const firstLink = nav.querySelector('a');
+    const mqMobile = window.matchMedia('(max-width: 900px)');
+
+    const setMobileNavA11y = (enabled) => {
+      if (enabled) {
+        nav.setAttribute('aria-hidden', 'true');
+        nav.setAttribute('inert', '');
+      } else {
+        nav.removeAttribute('aria-hidden');
+        nav.removeAttribute('inert');
+      }
+    };
+
     const closeNav = () => {
       nav.classList.remove('is-open');
       toggle.setAttribute('aria-expanded', 'false');
       document.body.classList.remove('nav-open');
+      scrim.classList.remove('is-visible');
+      setMobileNavA11y(true);
+      if (lastFocus) {
+        try { lastFocus.focus(); } catch (_) {}
+      }
     };
     const openNav = () => {
       nav.classList.add('is-open');
       toggle.setAttribute('aria-expanded', 'true');
       document.body.classList.add('nav-open');
+      scrim.classList.add('is-visible');
+      setMobileNavA11y(false);
+      lastFocus = document.activeElement;
+      if (firstLink) {
+        try { firstLink.focus(); } catch (_) {}
+      }
     };
     toggle.addEventListener('click', () => {
       const opened = toggle.getAttribute('aria-expanded') === 'true';
@@ -26,19 +57,26 @@
         closeNav();
       }
     });
-    // Close when clicking outside nav
-    document.addEventListener('click', (e) => {
-      const target = e.target;
-      const isOpen = nav.classList.contains('is-open');
-      if (!isOpen) return;
-      if (target === toggle || toggle.contains(target)) return;
-      if (target === nav || nav.contains(target)) return;
-      closeNav();
-    });
+    // Close when clicking scrim
+    scrim.addEventListener('click', closeNav);
     // Close on Escape key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') closeNav();
     });
+    // Close menu when resizing to desktop
+    const mqDesktop = window.matchMedia('(min-width: 901px)');
+    const onChange = () => {
+      if (mqDesktop.matches) {
+        closeNav();
+        setMobileNavA11y(false);
+      } else {
+        // On entering mobile, keep nav non-focusable until opened
+        setMobileNavA11y(!nav.classList.contains('is-open'));
+      }
+    };
+    try { mqDesktop.addEventListener('change', onChange); } catch (_) { mqDesktop.addListener(onChange); }
+    // Initialize A11y state based on current viewport
+    if (mqMobile.matches && !nav.classList.contains('is-open')) setMobileNavA11y(true);
   }
 
   // Footer year
@@ -100,4 +138,24 @@
       }
     });
   }
+
+  // Hide sticky CTA while focusing inputs (mobile keyboard avoidance)
+  const isFormControl = (el) => el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA' || el.tagName === 'SELECT');
+  document.addEventListener('focusin', (e) => {
+    if (isFormControl(e.target)) {
+      document.body.classList.add('input-focus');
+    }
+  });
+  document.addEventListener('focusout', () => {
+    setTimeout(() => {
+      const ae = document.activeElement;
+      if (!isFormControl(ae)) {
+        document.body.classList.remove('input-focus');
+      }
+    }, 100);
+  });
+  window.addEventListener('resize', () => {
+    const ae = document.activeElement;
+    if (!isFormControl(ae)) document.body.classList.remove('input-focus');
+  });
 })();
