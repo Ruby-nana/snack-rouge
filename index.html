@@ -2,7 +2,7 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>スナック ルージュ | Snack Rouge</title>
     <meta name="description" content="ディープレッドとゴールドが彩る、温かみのあるエレガントな夜の空間。スナック ルージュの公式サイト。営業時間・アクセス・料金・スタッフ紹介・お問い合わせ。" />
     <meta name="theme-color" content="#8a1538" />
@@ -44,7 +44,10 @@
         <div class="container hero__inner">
           <h1 class="hero__title">心ほどける、夜に寄り添う。</h1>
           <p class="hero__subtitle">Deep Red と Gold が灯す、上質なひととき。</p>
-          <a class="btn btn--primary" href="#contact">ご予約・お問い合わせ</a>
+          <div class="hero__ctas">
+            <a class="btn btn--primary" href="#contact">ご予約・お問い合わせ</a>
+            <a class="btn btn--outline" href="tel:0312345678" aria-label="電話で予約する">電話で予約</a>
+          </div>
         </div>
       </section>
 
@@ -76,7 +79,7 @@
           <div class="cards">
             <article class="card">
               <figure class="portrait">
-                <img src="assets/img/mama.jpg" alt="ママの写真（差し替え）" loading="lazy" />
+                <img src="assets/img/mama.jpg" alt="ママの写真（差し替え）" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" />
               </figure>
               <div class="card__body">
                 <h3 class="card__title">ママ：麗（うらら）</h3>
@@ -87,7 +90,7 @@
             </article>
             <article class="card">
               <figure class="portrait">
-                <img src="assets/img/staff1.jpg" alt="スタッフAの写真（差し替え）" loading="lazy" />
+                <img src="assets/img/staff1.jpg" alt="スタッフAの写真（差し替え）" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" />
               </figure>
               <div class="card__body">
                 <h3 class="card__title">スタッフ：紗羅</h3>
@@ -98,7 +101,7 @@
             </article>
             <article class="card">
               <figure class="portrait">
-                <img src="assets/img/staff2.jpg" alt="スタッフBの写真（差し替え）" loading="lazy" />
+                <img src="assets/img/staff2.jpg" alt="スタッフBの写真（差し替え）" loading="lazy" decoding="async" sizes="(max-width: 600px) 100vw, (max-width: 900px) 50vw, 33vw" />
               </figure>
               <div class="card__body">
                 <h3 class="card__title">スタッフ：綾</h3>
@@ -163,34 +166,59 @@
       <section id="contact" class="section section--tone" aria-labelledby="contact-title">
         <div class="container">
           <h2 id="contact-title" class="section__title">お問い合わせ</h2>
-          <p class="section__lead">ご予約・貸切のご相談など、お気軽にお問い合わせください。</p>
+          <p class="section__lead">ご予約・貸切のご相談など、お気軽にお問い合わせください。お急ぎの方は <a class="link" href="tel:0312345678">03-1234-5678</a> までお電話ください。</p>
           <form class="form" method="POST" action="mailto:info@rouge-snack.jp" enctype="text/plain" novalidate>
             <div class="form__grid">
               <label class="form__field">
                 <span class="form__label">お名前</span>
-                <input class="input" type="text" name="name" required placeholder="例）山田 太郎" />
+                <input class="input" type="text" name="name" required placeholder="例）山田 太郎" autocomplete="name" />
               </label>
               <label class="form__field">
                 <span class="form__label">メールアドレス</span>
-                <input class="input" type="email" name="email" required placeholder="例）you@example.com" />
+                <input class="input" type="email" name="email" required placeholder="例）you@example.com" autocomplete="email" inputmode="email" />
+              </label>
+              <label class="form__field">
+                <span class="form__label">電話番号（任意）</span>
+                <input class="input" type="tel" name="phone" placeholder="例）09012345678" inputmode="tel" autocomplete="tel" />
+              </label>
+              <label class="form__field">
+                <span class="form__label">ご来店希望日（任意）</span>
+                <input class="input" type="date" name="date" />
+              </label>
+              <label class="form__field">
+                <span class="form__label">ご来店希望時間（任意）</span>
+                <input class="input" type="time" name="time" />
+              </label>
+              <label class="form__field">
+                <span class="form__label">人数（任意）</span>
+                <input class="input" type="number" name="people" min="1" max="20" inputmode="numeric" placeholder="例）2" />
               </label>
               <label class="form__field form__field--full">
                 <span class="form__label">件名</span>
-                <input class="input" type="text" name="subject" placeholder="例）予約希望" />
+                <input class="input" type="text" name="subject" placeholder="例）予約希望" autocomplete="off" />
               </label>
               <label class="form__field form__field--full">
                 <span class="form__label">内容</span>
-                <textarea class="textarea" name="message" rows="6" required placeholder="お問い合わせ内容をご記入ください"></textarea>
+                <textarea class="textarea" name="message" rows="6" required placeholder="お問い合わせ内容をご記入ください" autocomplete="off"></textarea>
               </label>
             </div>
             <div class="form__actions">
               <button type="submit" class="btn btn--primary">送信する</button>
               <p class="form__note">※ メールソフトが起動します。サーバ連携をご希望の場合は後述の方法で設定してください。</p>
+              <p class="form__note" aria-live="polite" id="form-status" style="display:none"></p>
             </div>
           </form>
         </div>
       </section>
     </main>
+
+    <!-- Mobile sticky CTA -->
+    <div class="sticky-cta" role="region" aria-label="スマホ用ご予約案内">
+      <div class="container sticky-cta__inner">
+        <a class="btn btn--primary sticky-cta__btn" href="tel:0312345678" aria-label="電話で予約する">電話する</a>
+        <a class="btn btn--outline sticky-cta__btn" href="#contact" aria-label="お問い合わせフォームへ">問い合わせ</a>
+      </div>
+    </div>
 
     <footer class="site-footer">
       <div class="container footer-inner">
@@ -203,4 +231,3 @@
   </body>
   
 </html>
-
