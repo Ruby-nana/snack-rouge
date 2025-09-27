@@ -1,14 +1,17 @@
 "use client"
 import Link from 'next/link'
+import type { Route } from 'next'
 import { useState } from 'react'
 
-const links: { href: string; label: string }[] = [
-  { href: '#home', label: 'ホーム' },
-  { href: '#info', label: '店舗情報' },
-  { href: '#mama', label: 'ママの紹介' },
-  { href: '#pricing', label: '料金システム' },
-  { href: '#access', label: 'アクセス' },
-  { href: '#contact', label: 'お問い合わせ' },
+type NavItem = { href: Route; label: string; hash?: string }
+
+const links: NavItem[] = [
+  { href: '/', hash: 'home', label: 'ホーム' },
+  { href: '/', hash: 'info', label: '店舗情報' },
+  { href: '/', hash: 'mama', label: 'ママの紹介' },
+  { href: '/', hash: 'pricing', label: '料金システム' },
+  { href: '/', hash: 'access', label: 'アクセス' },
+  { href: '/', hash: 'contact', label: 'お問い合わせ' },
 ]
 
 export default function Nav() {
@@ -28,22 +31,29 @@ export default function Nav() {
         </button>
         <nav id="site-nav" className="hidden md:block" aria-label="メインメニュー">
           <ul className="flex gap-2 m-0 p-0 list-none">
-            {links.map(l => (
-              <li key={l.href}><Link href={l.href as string} className="nav-link">{l.label}</Link></li>
-            ))}
+            {links.map(l => {
+              const to = l.hash ? { pathname: l.href, hash: l.hash } : l.href
+              const key = l.hash ? `${l.href}#${l.hash}` : l.href
+              return (
+                <li key={key}><Link href={to} className="nav-link">{l.label}</Link></li>
+              )
+            })}
           </ul>
         </nav>
       </div>
       {open && (
         <div className="md:hidden border-t border-black/5 bg-white">
           <ul className="container py-2 grid gap-1">
-            {links.map(l => (
-              <li key={l.href}><Link href={l.href as string} className="nav-link w-full" onClick={() => setOpen(false)}>{l.label}</Link></li>
-            ))}
+            {links.map(l => {
+              const to = l.hash ? { pathname: l.href, hash: l.hash } : l.href
+              const key = l.hash ? `${l.href}#${l.hash}` : l.href
+              return (
+                <li key={key}><Link href={to} className="nav-link w-full" onClick={() => setOpen(false)}>{l.label}</Link></li>
+              )
+            })}
           </ul>
         </div>
       )}
     </header>
   )
 }
-
