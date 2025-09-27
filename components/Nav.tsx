@@ -2,7 +2,7 @@
 import Link from 'next/link'
 import { useState } from 'react'
 
-const links = [
+const links: { href: string; label: string }[] = [
   { href: '#home', label: 'ホーム' },
   { href: '#info', label: '店舗情報' },
   { href: '#mama', label: 'ママの紹介' },
@@ -29,7 +29,7 @@ export default function Nav() {
         <nav id="site-nav" className="hidden md:block" aria-label="メインメニュー">
           <ul className="flex gap-2 m-0 p-0 list-none">
             {links.map(l => (
-              <li key={l.href}><Link href={l.href} className="nav-link">{l.label}</Link></li>
+              <li key={l.href}><Link href={l.href as string} className="nav-link">{l.label}</Link></li>
             ))}
           </ul>
         </nav>
@@ -38,7 +38,7 @@ export default function Nav() {
         <div className="md:hidden border-t border-black/5 bg-white">
           <ul className="container py-2 grid gap-1">
             {links.map(l => (
-              <li key={l.href}><a href={l.href} className="nav-link w-full" onClick={() => setOpen(false)}>{l.label}</a></li>
+              <li key={l.href}><Link href={l.href as string} className="nav-link w-full" onClick={() => setOpen(false)}>{l.label}</Link></li>
             ))}
           </ul>
         </div>
