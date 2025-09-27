@@ -3,16 +3,18 @@ import Link from 'next/link'
 import type { Route } from 'next'
 import { useState } from 'react'
 
-type NavItem = { href: Route; label: string; hash?: string }
+type NavItem = { href: Route; label: string }
 
 const links: NavItem[] = [
-  { href: '/', hash: 'home', label: 'ホーム' },
-  { href: '/', hash: 'info', label: '店舗情報' },
-  { href: '/', hash: 'mama', label: 'ママの紹介' },
-  { href: '/', hash: 'pricing', label: '料金システム' },
-  { href: '/', hash: 'access', label: 'アクセス' },
-  { href: '/', hash: 'contact', label: 'お問い合わせ' },
+  { href: '/', label: 'ホーム' },
+  { href: '/', label: '店舗情報' },
+  { href: '/', label: 'ママの紹介' },
+  { href: '/', label: '料金システム' },
+  { href: '/', label: 'アクセス' },
+  { href: '/', label: 'お問い合わせ' },
 ]
+
+const hashes = ['home','info','mama','pricing','access','contact'] as const
 
 export default function Nav() {
   const [open, setOpen] = useState(false)
@@ -31,9 +33,9 @@ export default function Nav() {
         </button>
         <nav id="site-nav" className="hidden md:block" aria-label="メインメニュー">
           <ul className="flex gap-2 m-0 p-0 list-none">
-            {links.map(l => {
-              const to = l.hash ? { pathname: l.href, hash: l.hash } : l.href
-              const key = l.hash ? `${l.href}#${l.hash}` : l.href
+            {links.map((l, i) => {
+              const to = { pathname: l.href, hash: hashes[i] }
+              const key = `${l.href}#${hashes[i]}`
               return (
                 <li key={key}><Link href={to} className="nav-link">{l.label}</Link></li>
               )
@@ -44,9 +46,9 @@ export default function Nav() {
       {open && (
         <div className="md:hidden border-t border-black/5 bg-white">
           <ul className="container py-2 grid gap-1">
-            {links.map(l => {
-              const to = l.hash ? { pathname: l.href, hash: l.hash } : l.href
-              const key = l.hash ? `${l.href}#${l.hash}` : l.href
+            {links.map((l, i) => {
+              const to = { pathname: l.href, hash: hashes[i] }
+              const key = `${l.href}#${hashes[i]}`
               return (
                 <li key={key}><Link href={to} className="nav-link w-full" onClick={() => setOpen(false)}>{l.label}</Link></li>
               )
