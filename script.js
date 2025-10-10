@@ -59,7 +59,7 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // アニメーション対象要素を設定
-const animateElements = document.querySelectorAll('.feature-card, .gallery-item, .mama-content, .info-item, .price-card');
+const animateElements = document.querySelectorAll('.feature-card, .mama-content, .info-item, .price-card');
 
 animateElements.forEach(el => {
     el.style.opacity = '0';
@@ -127,4 +127,147 @@ document.addEventListener('click', (e) => {
             nav.classList.remove('active');
         }
     }
+});
+
+// ========================================
+// スライドショー機能
+// ========================================
+
+class Slideshow {
+    constructor() {
+        this.slides = document.querySelectorAll('.slide');
+        this.indicators = document.querySelectorAll('.indicator');
+        this.prevBtn = document.querySelector('.slide-btn.prev');
+        this.nextBtn = document.querySelector('.slide-btn.next');
+        this.currentSlide = 0;
+        this.autoPlayInterval = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+
+        this.init();
+    }
+
+    init() {
+        if (!this.slides.length) return;
+
+        // ボタンのイベントリスナー
+        this.prevBtn.addEventListener('click', () => this.prevSlide());
+        this.nextBtn.addEventListener('click', () => this.nextSlide());
+
+        // インジケーターのイベントリスナー
+        this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => this.goToSlide(index));
+        });
+
+        // タッチイベント（スワイプ対応）
+        const wrapper = document.querySelector('.slideshow-wrapper');
+        wrapper.addEventListener('touchstart', (e) => {
+            this.touchStartX = e.changedTouches[0].screenX;
+        });
+
+        wrapper.addEventListener('touchend', (e) => {
+            this.touchEndX = e.changedTouches[0].screenX;
+            this.handleSwipe();
+        });
+
+        // マウスドラッグ対応（PC用）
+        let isDragging = false;
+        let dragStartX = 0;
+
+        wrapper.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            dragStartX = e.clientX;
+        });
+
+        wrapper.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+        });
+
+        wrapper.addEventListener('mouseup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            const dragEndX = e.clientX;
+            const diff = dragStartX - dragEndX;
+
+            if (Math.abs(diff) > 50) {
+                if (diff > 0) {
+                    this.nextSlide();
+                } else {
+                    this.prevSlide();
+                }
+            }
+        });
+
+        wrapper.addEventListener('mouseleave', () => {
+            isDragging = false;
+        });
+
+        // 自動再生
+        this.startAutoPlay();
+
+        // ホバーで自動再生を停止
+        const container = document.querySelector('.slideshow-container');
+        container.addEventListener('mouseenter', () => this.stopAutoPlay());
+        container.addEventListener('mouseleave', () => this.startAutoPlay());
+    }
+
+    handleSwipe() {
+        const diff = this.touchStartX - this.touchEndX;
+
+        // 50px以上のスワイプで反応
+        if (Math.abs(diff) > 50) {
+            if (diff > 0) {
+                // 左スワイプ - 次へ
+                this.nextSlide();
+            } else {
+                // 右スワイプ - 前へ
+                this.prevSlide();
+            }
+        }
+    }
+
+    goToSlide(n) {
+        this.slides[this.currentSlide].classList.remove('active');
+        this.indicators[this.currentSlide].classList.remove('active');
+
+        this.currentSlide = n;
+
+        this.slides[this.currentSlide].classList.add('active');
+        this.indicators[this.currentSlide].classList.add('active');
+    }
+
+    nextSlide() {
+        let next = this.currentSlide + 1;
+        if (next >= this.slides.length) {
+            next = 0;
+        }
+        this.goToSlide(next);
+    }
+
+    prevSlide() {
+        let prev = this.currentSlide - 1;
+        if (prev < 0) {
+            prev = this.slides.length - 1;
+        }
+        this.goToSlide(prev);
+    }
+
+    startAutoPlay() {
+        this.stopAutoPlay(); // 既存のタイマーをクリア
+        this.autoPlayInterval = setInterval(() => {
+            this.nextSlide();
+        }, 5000); // 5秒ごとに自動切り替え
+    }
+
+    stopAutoPlay() {
+        if (this.autoPlayInterval) {
+            clearInterval(this.autoPlayInterval);
+            this.autoPlayInterval = null;
+        }
+    }
+}
+
+// スライドショーを初期化
+document.addEventListener('DOMContentLoaded', () => {
+    new Slideshow();
 });

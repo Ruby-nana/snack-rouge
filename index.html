@@ -8,7 +8,7 @@
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&family=Kaisei+Decol:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600;700&family=Noto+Sans+JP:wght@400;500;700&family=Kaisei+Decol:wght@400;700&family=Zen+Maru+Gothic:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -81,15 +81,37 @@
                 </div>
             </div>
 
-            <div class="shop-gallery">
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/400x300/FFF8DC/DC143C?text=Shop+Interior" alt="店内の様子">
+            <!-- スライドショー -->
+            <div class="slideshow-container">
+                <div class="slideshow-wrapper">
+                    <div class="slide active">
+                        <img src="https://via.placeholder.com/800x600/FFF8DC/DC143C?text=Shop+Interior+1" alt="店内の様子1">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x600/FFF8DC/DC143C?text=Shop+Interior+2" alt="店内の様子2">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x600/FFF8DC/DC143C?text=Counter" alt="カウンター">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x600/FFF8DC/DC143C?text=Atmosphere" alt="雰囲気">
+                    </div>
+                    <div class="slide">
+                        <img src="https://via.placeholder.com/800x600/FFF8DC/DC143C?text=Party+Scene" alt="パーティーの様子">
+                    </div>
                 </div>
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/400x300/FFF8DC/DC143C?text=Counter" alt="カウンター">
-                </div>
-                <div class="gallery-item">
-                    <img src="https://via.placeholder.com/400x300/FFF8DC/DC143C?text=Atmosphere" alt="雰囲気">
+
+                <!-- ナビゲーションボタン -->
+                <button class="slide-btn prev" aria-label="前のスライド">❮</button>
+                <button class="slide-btn next" aria-label="次のスライド">❯</button>
+
+                <!-- インジケーター -->
+                <div class="slide-indicators">
+                    <span class="indicator active" data-slide="0"></span>
+                    <span class="indicator" data-slide="1"></span>
+                    <span class="indicator" data-slide="2"></span>
+                    <span class="indicator" data-slide="3"></span>
+                    <span class="indicator" data-slide="4"></span>
                 </div>
             </div>
         </div>

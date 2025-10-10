@@ -179,13 +179,13 @@ body {
 }
 
 .hero-title {
-    font-family: 'Kaisei Decol', serif;
+    font-family: 'Zen Maru Gothic', sans-serif;
     font-size: 2.8rem;
     color: var(--dark-brown);
     margin-bottom: 1.5rem;
     line-height: 1.4;
     text-shadow: 2px 2px 4px var(--shadow);
-    font-weight: 700;
+    font-weight: 500;
 }
 
 .hero-subtitle {
@@ -375,46 +375,106 @@ section {
     font-weight: 700;
 }
 
-.shop-gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    gap: 2rem;
-    margin-top: 3rem;
-}
-
-.gallery-item {
+/* スライドショー */
+.slideshow-container {
     position: relative;
+    max-width: 900px;
+    margin: 3rem auto 0;
     overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px var(--shadow);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.gallery-item::before {
-    content: '';
+.slideshow-wrapper {
+    position: relative;
+    width: 100%;
+    padding-bottom: 66.67%; /* 3:2 アスペクト比 */
+    touch-action: pan-y pinch-zoom;
+}
+
+.slide {
     position: absolute;
     top: 0;
     left: 0;
-    right: 0;
-    bottom: 0;
-    background: linear-gradient(135deg, rgba(220, 20, 60, 0.1), rgba(212, 175, 55, 0.1));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 1;
-}
-
-.gallery-item:hover::before {
-    opacity: 1;
-}
-
-.gallery-item img {
     width: 100%;
-    border-radius: 15px;
-    transition: transform 0.5s ease;
-    border: 4px solid var(--white);
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.6s ease-in-out;
+    pointer-events: none;
 }
 
-.gallery-item:hover img {
-    transform: scale(1.1);
+.slide.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* ナビゲーションボタン */
+.slide-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(220, 20, 60, 0.8);
+    color: white;
+    border: none;
+    font-size: 2rem;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    z-index: 10;
+    transition: all 0.3s ease;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+.slide-btn:hover {
+    background: rgba(220, 20, 60, 1);
+    transform: translateY(-50%) scale(1.1);
+}
+
+.slide-btn.prev {
+    left: 10px;
+}
+
+.slide-btn.next {
+    right: 10px;
+}
+
+/* インジケーター */
+.slide-indicators {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 10px;
+    z-index: 10;
+}
+
+.indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.indicator:hover {
+    background: rgba(255, 255, 255, 0.8);
+    transform: scale(1.2);
+}
+
+.indicator.active {
+    background: var(--red);
+    border-color: white;
+    transform: scale(1.3);
 }
 
 /* ========================================
@@ -1060,6 +1120,25 @@ section {
     .price-card.highlight {
         transform: scale(1);
     }
+
+    /* スライドショー - スマホ */
+    .slide-btn {
+        font-size: 1.5rem;
+        padding: 0.3rem 0.7rem;
+    }
+
+    .slide-btn.prev {
+        left: 5px;
+    }
+
+    .slide-btn.next {
+        right: 5px;
+    }
+
+    .indicator {
+        width: 10px;
+        height: 10px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1087,16 +1166,22 @@ section {
         grid-template-columns: 1fr;
     }
 
-    .shop-gallery {
-        grid-template-columns: 1fr;
-    }
-
     .price {
         font-size: 2.5rem;
     }
 
     .mama-info h3 {
         font-size: 1.8rem;
+    }
+
+    /* スライドショー - 小画面 */
+    .slideshow-container {
+        margin: 2rem auto 0;
+    }
+
+    .slide-btn {
+        font-size: 1.2rem;
+        padding: 0.2rem 0.5rem;
     }
 }
 
