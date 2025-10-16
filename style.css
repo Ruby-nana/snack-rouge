@@ -545,6 +545,16 @@ section {
     transition: transform 0.3s ease;
 }
 
+.mama-image img:first-child {
+    margin-bottom: 1.5rem;
+}
+
+.mama-image img.cat-image {
+    max-width: 280px;
+    margin: 1.5rem auto 0;
+    display: block;
+}
+
 .mama-image:hover img {
     transform: scale(1.05);
 }
