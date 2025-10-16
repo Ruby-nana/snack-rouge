@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(git config:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n画像パスを実際のファイルに変更\n\nプレースホルダー画像（via.placeholder.com）を実際の画像ファイルパスに置き換え：\n- メインビジュアル: interior1.jpg\n- スライドショー: interior1.jpg ~ interior5.jpg\n- ママの紹介: mama.jpg\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git push:*)",
+      "Bash(git commit -m \"$(cat <<''EOF''\n画像ファイルを追加\n\nスナックRougeの実際の画像を追加：\n- 内観写真: interior1.jpg ~ interior5.jpg\n- 外観写真: exterior1.jpg ~ exterior3.jpg\n- ママの似顔絵: mama.jpg\n- その他: cat.jpg, drinks.jpg\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")",
+      "Bash(git commit -m \"$(cat <<''EOF''\nコンテンツとデザインの改善\n\n- 特徴カードの内容を更新（ママの歌、カラオケ、気軽に立ち寄れる）\n- 店舗情報を正しい内容に更新（住所、電話番号、営業時間、定休日）\n- ママの似顔絵をmama2.jpgに変更（トリミング済み）\n- 猫の画像を追加\n- 猫の画像用のCSSスタイルを追加\n\n🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>\nEOF\n)\")"
     ],
     "deny": [],
     "ask": []
