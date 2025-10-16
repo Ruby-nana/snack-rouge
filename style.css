@@ -703,6 +703,8 @@ section {
     font-size: 1.05rem;
     text-align: right;
     width: 40%;
+    font-family: 'Courier New', 'Consolas', monospace;
+    letter-spacing: 0.05em;
 }
 
 /* ワンショット行のスタイル */
@@ -951,7 +953,7 @@ section {
 .info-item:nth-child(3) h3::before { content: '📞'; }
 .info-item:nth-child(4) h3::before { content: '🕐'; }
 .info-item:nth-child(5) h3::before { content: '📅'; }
-.info-item:nth-child(6) h3::before { content: '🚗'; }
+.info-item:nth-child(6) h3::before { content: '💺'; }
 
 .info-item p {
     font-size: 1.1rem;
@@ -970,6 +972,12 @@ section {
 .phone-link:hover {
     color: var(--gold);
     text-decoration: underline;
+}
+
+/* 席数表示 */
+.seats-info {
+    font-family: 'Kaisei Decol', serif;
+    line-height: 2;
 }
 
 /* ========================================
@@ -1006,7 +1014,7 @@ section {
 }
 
 .access-info h3:nth-child(1)::before { content: '🚃'; }
-.access-info h3:nth-child(3)::before { content: '🚗'; }
+.access-info h3:nth-child(3)::before { content: '🚶'; }
 .access-info h3:nth-child(5)::before { content: '📞'; }
 
 .contact-phone {
