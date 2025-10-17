@@ -831,6 +831,62 @@ section {
     font-size: 0.9rem;
 }
 
+/* 飲み放題プラン */
+.nomihoudai-plan {
+    background: linear-gradient(135deg, #FFF8DC 0%, #FAEBD7 100%);
+    padding: 2rem;
+    border-radius: 20px;
+    border: 3px solid var(--gold);
+    box-shadow: 0 10px 35px rgba(212, 175, 55, 0.25);
+    max-width: 650px;
+    margin: 2rem auto;
+    text-align: center;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.nomihoudai-plan:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 15px 45px rgba(212, 175, 55, 0.35);
+    border-color: var(--red);
+}
+
+.nomihoudai-plan h4 {
+    color: var(--red);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    font-family: 'Kaisei Decol', serif;
+    font-weight: 700;
+    text-shadow: 2px 2px 4px var(--shadow);
+}
+
+.nomihoudai-price {
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: var(--dark-brown);
+    margin-bottom: 1.5rem;
+    font-family: 'Kaisei Decol', serif;
+}
+
+.nomihoudai-content {
+    background: rgba(255, 255, 255, 0.6);
+    padding: 1.5rem;
+    border-radius: 15px;
+    border: 2px dashed var(--gold);
+}
+
+.nomihoudai-items {
+    font-size: 1.2rem;
+    color: var(--dark-brown);
+    margin-bottom: 1rem;
+    font-weight: 500;
+}
+
+.nomihoudai-note {
+    color: var(--red);
+    font-size: 1.05rem;
+    font-weight: bold;
+}
+
 .menu-note {
     text-align: center;
     color: var(--red);
